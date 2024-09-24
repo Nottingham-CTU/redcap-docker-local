@@ -8,15 +8,8 @@ RUN apt-get update && \
 # Install PHP extensions.  This is key because REDCap uses MySQLi
 RUN docker-php-ext-install -j$(nproc) mysqli
 
-# Configure Mailhog
-RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.19.4.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf -
-ENV PATH /usr/local/go/bin:$PATH
-RUN go install github.com/mailhog/mhsendmail@v0.2.0
-RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
-
-# Copy a php.ini and set the Mailhog path
+# Copy a php.ini
 COPY php.ini /usr/local/etc/php
-RUN echo "sendmail_path = '/usr/bin/mhsendmail --smtp-addr=mailhog:1025'" >> /usr/local/etc/php/php.ini
 
 # Expose port 80 for Apache.
 EXPOSE 80

@@ -1,8 +1,5 @@
-version: '3'
-
 services:
   app:
-    platform: linux/x86_64
     container_name: redcap_docker-app-1
     build: app
     ports:
@@ -25,9 +22,9 @@ services:
     restart: always
     tmpfs: /var/lib/mysql
 
-  mailhog:
-    container_name: redcap_docker-mailhog-1
-    image: mailhog/mailhog:v1.0.0
+  mailpit:
+    container_name: redcap_docker-mailpit-1
+    image: axllent/mailpit
     ports:
       - "1025:1025"
       - "8025:8025"
